@@ -80,7 +80,7 @@ class MTCore extends PluginBase implements Listener{
     }
 
     public static function getPrefix(){
-        return "§l§4[§r§6MineTox§l§4] §r§f";
+        return "§l§1[§r§1A§3T§9Games§l§1] §r§f";
     }
 
     public function onPreLogin(PlayerPreLoginEvent $e){
@@ -89,16 +89,16 @@ class MTCore extends PluginBase implements Listener{
         if (\count($this->getServer()->getOnlinePlayers()) >= 1){
             if (!$p->hasPermission("minetox.log.full")){
                 $e->setKickMessage(self::getPrefix()."\n".
-                    "§cSorry, but server is full.\n".
-                    "§bVIPs can connect even the server is full!\n".
-                    "§aBuy VIP at bit.do/mtBUY");
+                    "§cSorry, server je plny.\n".
+                    "§bPouze VIP hraci se muzou pripojit!\n".
+                    "§aKup si VIP na bit.do/atBUY");
                 $e->setCancelled();
             }
         }
         if (($pl = $this->getServer()->getPlayer($p->getName())) instanceof Player){
             if ($this->isAuthed($pl)){
                 $e->setKickMessage(self::getPrefix()."\n".
-                    "§cPlayer with same nick is already playing.\n");
+         "§cHrac se stejnym nickem tady uz hraje.\n");
             }
         }
     }
@@ -128,77 +128,77 @@ class MTCore extends PluginBase implements Listener{
         switch ($cmd->getName()){
             case "setrank":
                 if (!$sd->hasPermission("minetox.cmd.setrank")){
-                    $sd->sendMessage(self::getPrefix()."§cYou don't have permission to perform this command");
+                    $sd->sendMessage(self::getPrefix()."§cNemas permisi na tento prikaz.");
                     return true;
                 }
                 if (\count($args) !== 2){
-                    $sd->sendMessage(self::getPrefix()."§6Usage: /setrank <nick> <rank>");
+                    $sd->sendMessage(self::getPrefix()."§bUsage: /setrank <nick> <rank>");
                     return true;
                 }
                 new SetRankQuery($this, $args[0], $args[1]);
-                $sd->sendMessage(self::getPrefix()."§a".$args[0]."§e's rank updated");
-                $sd->sendMessage(self::getPrefix()."§a".$args[0]."§e's group changed");
+                $sd->sendMessage(self::getPrefix()."§bHraci §a".$args[0]."§b rank aktualizovan");
+                $sd->sendMessage(self::getPrefix()."§bHraci §a".$args[0]."§b group zmenen");
                 break;
             case "addcoins":
             case "addtokens":
                 if (!$sd->hasPermission("minetox.cmd.addtokens")){
-                    $sd->sendMessage(self::getPrefix()."§cYou don't have permission to perform this command");
+                    $sd->sendMessage(self::getPrefix()."§cNemas permisi na tento prikaz.");
                     return true;
                 }
                 if (\count($args) !== 2){
-                $sd->sendMessage(self::getPrefix()."§6Usage: /addtokens <nick> <coins>");
+                $sd->sendMessage(self::getPrefix()."§bUsage: /addtokens <nick> <coins>");
                 return true;
                 }
                 new AddTokensQuery($this, $args[0], $args[1]);
-                $sd->sendMessage(self::getPrefix()."§aAdded §e{$args[1]} §atokens to §9{$args[0]}'s §abalance'");
+                $sd->sendMessage(self::getPrefix()."§aPridano §b{$args[1]} §atokenu hracovi §9{$args[0]} §abalance'");
                 break;
             case "substractcoins":
             case "substracttokens":
                 if (!$sd->hasPermission("minetox.cmd.substracttokens")){
-                    $sd->sendMessage(self::getPrefix()."§cYou don't have permission to perform this command");
+                    $sd->sendMessage(self::getPrefix()."§cNemas permisi na tento prikaz.");
                     return true;
                 }
                 if (\count($args) !== 2){
-                    $sd->sendMessage(self::getPrefix()."§6Usage: /substracttokens <nick> <coins>");
+                    $sd->sendMessage(self::getPrefix()."§bUsage: /substracttokens <nick> <coins>");
                     return true;
                 }
                 new SubstractTokensQuery($this, $args[0], $args[1]);
-                $sd->sendMessage(self::getPrefix()."§aDeducted §e{$args[1]} §atokens from §9{$args[0]}'s §abalance'");
+                $sd->sendMessage(self::getPrefix()."§aDeducted §b{$args[1]} §atokens from §9{$args[0]}'s §abalance'");
             break;
             case "msg":
                 if (!$sd->hasPermission("minetox.cmd.message")){
-                    $sd->sendMessage(self::getPrefix()."§cYou don't have permission to use private messages\n".
-                        "§eBuy VIP at §bbit.do/mtBUY §eto have an option of private chat!");
+                    $sd->sendMessage(self::getPrefix()."§cNemas permisi na pouziti soukromych zprav\n".
+                        "§fKup si VIP na §bbit.ly/atBUY §ena pouziti soukromeho chatu.");
                     return true;
                 }
                 if (\count($args) < 2){
-                    $sd->sendMessage(self::getPrefix()."§6Usage: /msg <player> <message>");
+                    $sd->sendMessage(self::getPrefix()."§bUsage: /msg <player> <message>");
                     return true;
                 }
                 $p = $this->getServer()->getPlayerExact($args[0]);
                 if (!($p instanceof Player)){
-                    $sd->sendMessage(self::getPrefix()."§cThe player is not online.");
+                    $sd->sendMessage(self::getPrefix()."§cHrac neni online.");
                     return true;
                 }
                 $msg = \str_replace($args[0], "", implode(" ", $args));
                 $snick = $sd instanceof Player ? self::getDisplayRank($sd).$sd->getName() : "§d[CONSOLE] §f";
-                $p->sendMessage($snick."§b> §7[Me] §e:§3".self::getChatColor($sd).
+                $p->sendMessage($snick."§7> §7[Me] §8:§f".self::getChatColor($sd).
                         \str_replace("&", "§", $msg));
-                $sd->sendMessage("§7[Me] §b> §e".$p->getDisplayName()." §e:§3".self::getChatColor($sd).
+                $sd->sendMessage("§7[Me] §7> §f".$p->getDisplayName()." §8:§f".self::getChatColor($sd).
                         \str_replace("&", "§", $msg));
                 break;
             case "ban":
                 if (!$sd->hasPermission("minetox.ban")){
-                    $sd->sendMessage(self::getPrefix()."§cYou do not have permission to perform this command");
+                    $sd->sendMessage(self::getPrefix()."§cNemas permisi na tento prikaz.");
                     return true;
                 }
                 if (\count($args) < 2){
-                    $sd->sendMessage(self::getPrefix()."§6Usage: /ban <player> <reason>");
+                    $sd->sendMessage(self::getPrefix()."§bUsage: /ban <player> <reason>");
                     return true;
                 }
                 $p = $this->getServer()->getPlayerExact($args[0]);
                 if ($p instanceof Player && ($p->hasPermission("minetox.immune"))){
-                    $sd->sendMessage(self::getPrefix()."§cCan not ban this player; Perhaps you are trying to ban server staff?");
+                    $sd->sendMessage(self::getPrefix()."§cNemuzu zabanovat tohoto hrace; Mozna chces zabanovat Nekoho z Ateamu..");
                     return true;
                 }
                 $reason = \str_replace($args[0], "", implode(" ", $args));
@@ -207,13 +207,13 @@ class MTCore extends PluginBase implements Listener{
             case "help":
                 $sd->sendMessage(
                     "§7-------------------------------------\n".
-                    self::getPrefix()."§eHelp Page §b1/1\n".
+                    self::getPrefix()."§eNapoveda §b1/1\n".
                     "§7-------------------------------------\n".
-                    "§b/changepwd §e=> §aChange player password\n".
-                    "§b/login §e=> §aLogin to your account\n".
-                    "§b/msg §e=> §aSends a private message to player\n".
-                    "§b/register §e=> §aRegister a new account\n".
-                    "§b/tokens §e=> §aShows your tokens balance\n".
+                    "§b/changepwd §e=> §aZmena hesla\n".
+                    "§b/login §e=> §aPrihlaseni hrace\n".
+                    "§b/msg §e=> §aSoukroma zprava hraci\n".
+                    "§b/register §e=> §aRegistrace hrace\n".
+                    "§b/tokens §e=> §aUkaze zustatek tokenu\n".
                     "§7-------------------------------------"
                 );
                 break;
@@ -236,18 +236,18 @@ class MTCore extends PluginBase implements Listener{
                 break;
             case "register":
                 if (\count($args) !== 2){
-                    $sd->sendMessage(self::getPrefix()."§6Use /register <password> <password>");
+                    $sd->sendMessage(self::getPrefix()."§bPouzij /register <password> <password>");
                     return true;
                 }
                 if ($args[0] != $args[1]){
-                    $sd->sendMessage(self::getPrefix()."§cBoth passwords need to be same!");
+                    $sd->sendMessage(self::getPrefix()."§cObe hesla museji byt stejna.");
                     return true;
                 }
                 $this->authmgr->register($sd, $args[0]);
                 break;
             case "login":
                 if (\count($args) !== 1){
-                    $sd->sendMessage(self::getPrefix()."§6Use /login <password>");
+                    $sd->sendMessage(self::getPrefix()."§bPouzij /login <heslo>");
                     return true;
                 }
                 $this->authmgr->login($sd, $args[0]);
@@ -255,7 +255,7 @@ class MTCore extends PluginBase implements Listener{
             case "changepwd":
             case "changepassword":
                 if (\count($args) !== 2){
-                    $sd->sendMessage(self::getPrefix()."§6Use /changepwd <oldpassword> <newpassword>");
+                    $sd->sendMessage(self::getPrefix()."§6Use /changepwd <stareheslo> <noveheslo>");
                     return true;
                 }
                 $this->authmgr->changePassword($sd, $args[0], $args[1]);
@@ -266,10 +266,12 @@ class MTCore extends PluginBase implements Listener{
 
     public static function getDisplayRank(Player $p){
         if ($p->hasPermission("minetox.owner")){
-            return "§l§a[§r§aOwner§l] §r§a";
+            return "§l§a[§r§aMajitel§l] §r§a";
         }
         elseif ($p->hasPermission("minetox.developper")){
-            return "§l§3[§r§3Developper§l] §r§3";
+            return "§l
+            
+ [§r§3Technik§l] §r§3";
         }
         elseif ($p->hasPermission("minetox.banner")){
             return "§l§c[§r§cHelper§l] §r§c";
@@ -335,16 +337,16 @@ class MTCore extends PluginBase implements Listener{
         $e->setCancelled();
 
         if (!$this->isAuthed($p)) {
-            $p->sendMessage(self::getPrefix()."§cYou are not logged in");
+            $p->sendMessage(self::getPrefix()."§cNejsi prihlaseny!");
             return;
         }
 
         /** @var PlayerData $pl */
         $pl = $this->players[strtolower($p->getName())];
-        $diff = ($pl->getChatTick()+5) - time();
+        $diff = ($pl->getChatTick()+1) - time();
 
         if ($diff > 0 && !$pl->getChatTick() == 0 && !$p->hasPermission("minetox.waitbypass")){
-            $p->sendMessage(self::getPrefix()."§cPlease wait $diff seconds until chatting again");
+            $p->sendMessage(self::getPrefix()."§cPockej prosim $diff sekund abys mohl psat");
             $pl->setTick(time());
             return;
         }
@@ -353,7 +355,7 @@ class MTCore extends PluginBase implements Listener{
         $ips = [".cz", ".eu", ".sk", ".tk", ".com", ".net", "lifeboat", "inpvp"];
         foreach ($ips as $ip){
             if (stripos($e->getMessage(), $ip) !== false){
-                $p->kick(self::getPrefix()."\n§cYou have been kicked due to:\n§eServer advertising");
+                $p->kick(self::getPrefix()."\n§cByl jsi automaticky kicknut za:\n§eServer reklamu");
                 return;
             }
         }
@@ -363,7 +365,7 @@ class MTCore extends PluginBase implements Listener{
             'mrd', 'pica', 'pico', 'pic', 'penis', 'shit', 'zkurvysyn', 'vyser', 'zaser', 'hovno', 'hovn', 'zasrany'];
         foreach ($slova as $s) {
             if (stripos(strtolower($e->getMessage()), $s) !== false) {
-                $p->sendMessage(self::getPrefix()."§cDo not swear!");
+                $p->sendMessage(self::getPrefix()."§cSprostá slova zakázana!");
                 return;
             }
         }
@@ -379,7 +381,7 @@ class MTCore extends PluginBase implements Listener{
         if (!$p->hasPermission("minetox.color")){
             $message = str_replace("§", "", $message);
         }
-        $msg = self::getDisplayRank($p).$p->getName()."§3 > ".self::getChatColor($p).$message;
+        $msg = self::getDisplayRank($p).$p->getName()."§7 > ".self::getChatColor($p).$message;
 
         /** @var PlayerData $pl */
         foreach ($this->players as $pl) {
@@ -394,7 +396,7 @@ class MTCore extends PluginBase implements Listener{
         $p = $e->getPlayer();
 
         if (!$this->isAuthed($p)) {
-            $p->sendMessage(self::getPrefix()."§cYou are not logged in");
+            $p->sendMessage(self::getPrefix()."§cNejsi prihlaseny!");
             $e->setCancelled();
             return;
         }
@@ -407,29 +409,29 @@ class MTCore extends PluginBase implements Listener{
                 $this->despawnPlayersFrom($p);
                 $pl->setPlayersVisible(false);
                 $p->getInventory()->remove($p->getInventory()->getItemInHand());
-                $p->getInventory()->addItem(Item::get(347, 0, 1)->setCustomName("§r§eShow Players"));
-                $p->sendMessage("§eVanished all players");
+                $p->getInventory()->addItem(Item::get(347, 0, 1)->setCustomName("§r§eUkazani hracu"));
+                $p->sendMessage("§eZneviditelneni vsech hracu");
             }
             else {
                 $this->spawnPlayersTo($p);
                 $pl->setPlayersVisible(true);
                 $p->getInventory()->remove($p->getInventory()->getItemInHand());
-                $p->getInventory()->addItem(Item::get(347, 0, 1)->setCustomName("§r§eHide Players"));
-                $p->sendMessage("§eAll players are now visible");
+                $p->getInventory()->addItem(Item::get(347, 0, 1)->setCustomName("§r§eSchovani hracu"));
+                $p->sendMessage("§eVsichni hraci jsou ted viditelni");
             }
         }
     }
 
     public function onPlayerDropItem(PlayerDropItemEvent $e) {
         if (!$this->isAuthed($e->getPlayer())) {
-            $e->getPlayer()->sendMessage(self::getPrefix()."§cYou are not logged in");
+            $e->getPlayer()->sendMessage(self::getPrefix()."§cNejsi prihlaseny!");
             $e->setCancelled();
         }
     }
 
     public function onPlayerItemConsume(PlayerItemConsumeEvent $e) {
         if (!$this->isAuthed($e->getPlayer())) {
-            $e->getPlayer()->sendMessage(self::getPrefix()."§cYou are not logged in");
+            $e->getPlayer()->sendMessage(self::getPrefix()."§cNejsi prihlaseny!");
             $e->setCancelled();
         }
 
@@ -525,7 +527,7 @@ class MTCore extends PluginBase implements Listener{
         $p = $e->getPlayer();
 
         if (!$this->isAuthed($p)) {
-            $p->sendMessage(self::getPrefix()."§cYou are not logged in");
+            $p->sendMessage(self::getPrefix()."§cNejsi prihlaseny!");
             $e->setCancelled();
         }
 
@@ -540,7 +542,7 @@ class MTCore extends PluginBase implements Listener{
         $p = $e->getPlayer();
 
         if (!$this->isAuthed($p)) {
-            $p->sendMessage(self::getPrefix()."§cYou are not logged in");
+            $p->sendMessage(self::getPrefix()."§cNejsi prihlaseny!");
             $e->setCancelled();
         }
 
@@ -564,7 +566,7 @@ class MTCore extends PluginBase implements Listener{
         $msg = strtolower($e->getMessage());
 
         if (!$this->isAuthed($p) && strpos($msg, '/login') !== 0 && strpos($msg, '/register') !== 0) {
-            $p->sendMessage(self::getPrefix()."§cYou are not logged in");
+            $p->sendMessage(self::getPrefix()."§cNejsi prihlaseny!");
             $e->setCancelled();
             return;
         }
@@ -591,7 +593,7 @@ class MTCore extends PluginBase implements Listener{
 
         if (!$join && $p->getInventory() instanceof PlayerInventory) {
             $p->getInventory()->clearAll();
-            $p->getInventory()->setItem(0, Item::get(Item::CLOCK, 0, 1)->setCustomName("§r§eHide Players"));
+            $p->getInventory()->setItem(0, Item::get(Item::CLOCK, 0, 1)->setCustomName("§r§eSchovat hrace"));
             $p->getInventory()->setItem(1, Item::get(Item::GOLD_INGOT, 0, 1));
             $p->getInventory()->setHotbarSlotIndex(0, 0);
             $p->getInventory()->setHotbarSlotIndex(1, 1);
@@ -646,23 +648,23 @@ class LoadPluginTask extends Task{
         $bedwars = $this->plugin->getServer()->getPluginManager()->getPlugin("BedWars");
         if ($bedwars instanceof Plugin && $bedwars->isEnabled()) {
             $this->plugin->miniGame = "bedwars";
-            $this->plugin->getServer()->getNetwork()->setName("§6 MineTox §f§lBed§4Wars");
+            $this->plugin->getServer()->getNetwork()->setName("§bATGames §f§lBed§4Wars");
         }
 
         $anni = $this->plugin->getServer()->getPluginManager()->getPlugin("Annihilation");
         if ($anni instanceof Plugin && $anni->isEnabled()) {
             $this->plugin->miniGame = "annihilation";
-            $this->plugin->getServer()->getNetwork()->setName("§6 MineTox §9§lAnnihilation");
+            $this->plugin->getServer()->getNetwork()->setName("§bATGames §9§lAnnihilation");
         }
     }
 }
 
 class MessageTask extends Task{
 
-    public static $messages = ["§3Vote for §6MineTox §3at §abit.do/mtVOTE",
-        "§3Do you need help? Ask us on the twitter: §atwitter.com/MineTox_MCPE",
-        "§3You can buy VIP rank at §abit.do/mtBUY", "§3Want to play with friends? Join the same IP and port",
-        "§3See server status at §astatus.minetox.cz", "§3Register at our forums and get 3000 Tokens! §abit.do/mtFORUMS"
+    public static $messages = ["§fNejlepsi minihry na tomto serveru!",
+        "§fPotrebujes pomoc? Zeptej se nas na Facebooku: §9facebook.com/ATGamesServer",
+        "§fKup si VIP §9bit.ly/atBUY", "§fChces hrat s kamaradama? Rekni jim stejnou IP a port",
+        "§fNas web je §9atgames.tk"
     ];
     private $i = 0;
     private $plugin;
