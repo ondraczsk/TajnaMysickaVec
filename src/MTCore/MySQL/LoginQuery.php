@@ -32,18 +32,18 @@ class LoginQuery extends AsyncQuery {
 
         if (empty($data)) {
             $result["success"] = false;
-            $result["msg"] = MTCore::getPrefix()."§cYou are not registered\n§cUse /register [password] [password]";
+            $result["msg"] = MTCore::getPrefix()."§cNejsi registrovan\n§cPouzij /register [heslo] [heslo]";
         }
 
         else {
             $pass = $data['heslo'];
             if (hash("sha1", $this->password . strtolower($this->player)) != $pass && $this->password != $pass) {
 
-                $result["msg"] = MTCore::getPrefix() . TextFormat::RED . "Wrong password";
+                $result["msg"] = MTCore::getPrefix() . TextFormat::RED . "Spatne heslo";
                 $result["success"] = false;
             } else {
 
-                $result["msg"] = MTCore::getPrefix() . TextFormat::GREEN . "You have been successfully logged in";
+                $result["msg"] = MTCore::getPrefix() . TextFormat::GREEN . "Byl jsi uspesne prihlasen!";
 
                 $this->setPlayer($this->player, "ip", $this->ip);
                 $this->setPlayer($this->player, "id", $this->uuid);
@@ -79,7 +79,7 @@ class LoginQuery extends AsyncQuery {
             $p->removeAllEffects();
             if($p->getInventory() instanceof PlayerInventory) {
                 $p->getInventory()->clearAll();
-                $p->getInventory()->setItem(0, Item::get(Item::CLOCK, 0, 1)->setCustomName("§r§eDisplay players"));
+                $p->getInventory()->setItem(0, Item::get(Item::CLOCK, 0, 1)->setCustomName("§r§bZobrazit hrace"));
                 $p->getInventory()->setItem(1, Item::get(Item::GOLD_INGOT, 0, 1));
                 $p->getInventory()->sendContents($p);
             }
