@@ -30,18 +30,18 @@ class BanQuery extends AsyncQuery {
 
             if ($banData !== null && $banData["expiration"] == 1){
                 $result["success"] = true;
-                $result["msg"] = MTCore::getPrefix()."§cCan not ban this player; This player is already banned forever";
+                $result["msg"] = MTCore::getPrefix()."§cNemuzu zabanovat hrace; Hrac uz je zabanovan";
             }
             else {
                 $this->ban($id, $this->reason, $this->banner, $banData);
-                $result["msg"] = $banData === null ? MTCore::getPrefix()."§aBanned player §e".
-                    $this->player : MTCore::getPrefix()."§aPlayer §e".$this->player." §ahas been banned §9forever";
+                $result["msg"] = $banData === null ? MTCore::getPrefix()."§cZabanovan hrac §b".
+                    $this->player : MTCore::getPrefix()."§bHrac §f".$this->player." §bbyl zabanovan §9navzdy!";
                 $result["success"] = true;
             }
         }
 
         else {
-            $result["msg"] = MTCore::getPrefix()."§cAn unknown error occured while trying to ban this player.";
+            $result["msg"] = MTCore::getPrefix()."§cStala se neocekavana chyba pri banovani hrace!";
         }
 
 
@@ -56,7 +56,7 @@ class BanQuery extends AsyncQuery {
             $p = $server->getPlayerExact($this->player);
 
             if ($p instanceof Player && $p->isOnline()) {
-                $p->kick(TextFormat::RED . "You are banned. \n " . TextFormat::RED . "Reason: " . TextFormat::AQUA . $this->reason, false);
+                $p->kick(TextFormat::RED . "Byl jsi zabanovan. \n " . TextFormat::RED . "Duvod: " . TextFormat::AQUA . $this->reason, false);
             }
 
             $server->getLogger()->info($result["msg"]);
