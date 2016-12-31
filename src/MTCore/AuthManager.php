@@ -19,11 +19,11 @@ class AuthManager {
     public function register(Player $p, $heslo) {
 
         if ($this->plugin->isAuthed($p)) {
-            $p->sendMessage($this->plugin->getPrefix() . TextFormat::GOLD . "You are already logged in");
+            $p->sendMessage($this->plugin->getPrefix() . TextFormat::AQUA . "Uz si prihlasen");
             return;
         }
         if (strlen($heslo) < 4 || strlen($heslo) > 20) {
-            $p->sendMessage($this->plugin->getPrefix() . TextFormat::RED . "Password lenght must be between 4 and 20 characters");
+            $p->sendMessage($this->plugin->getPrefix() . TextFormat::RED . "Heslo musi byt dlouhe od 4 do 20 znaku dlouhe");
             return;
         }
 
@@ -33,7 +33,7 @@ class AuthManager {
     public function login(Player $p, $heslo) {
 
         if ($this->plugin->isAuthed($p)) {
-            $p->sendMessage(MTCore::getPrefix() . TextFormat::RED . "You are already logged in");
+            $p->sendMessage(MTCore::getPrefix() . TextFormat::RED . "Uz si prihlasen");
             return;
         }
 
