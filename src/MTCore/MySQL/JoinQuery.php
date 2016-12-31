@@ -117,7 +117,6 @@ class JoinQuery extends AsyncQuery {
 
         if($p->getInventory() instanceof PlayerInventory and $plugin->isAuthed($p)) {
             $p->getInventory()->clearAll();
-            $p->getInventory()->setItem(0, Item::get(Item::CLOCK, 0, 1)->setCustomName("§r§eVanishovat hrace");
             $p->getInventory()->setItem(1, Item::get(Item::GOLD_INGOT, 0, 1));
             $p->getInventory()->sendContents($p);
         }
