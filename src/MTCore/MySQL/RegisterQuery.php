@@ -56,7 +56,7 @@ class RegisterQuery extends AsyncQuery {
         }
 
         if($result["already"]) {
-            $p->sendMessage(MTCore::getPrefix()."§6You are already registered");
+            $p->sendMessage(MTCore::getPrefix()."§6Uz jsi registrovan");
             return;
         }
 
@@ -65,7 +65,7 @@ class RegisterQuery extends AsyncQuery {
         $pl->setAuthed(true);
 
         $p->removeAllEffects();
-        $p->sendMessage(MTCore::getPrefix()."§aYou have been successfully registered");
+        $p->sendMessage(MTCore::getPrefix()."§aByl jsi uspesne registrovan");
     }
 
 }
