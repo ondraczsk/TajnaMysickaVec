@@ -37,15 +37,15 @@ class SetPermissionsTask extends AsyncQuery{
         $ban = $data["expiration"];
         if ($ban > 0){
             if ($ban == 1){
-                $p->kick("§l§4[ §r§6MineTox §l§4]\n".
-                    "§cYou are banned forever.\n".
-                    "§eReason: §a".$data["reason"], false);
+                $p->kick("§l§1A§9t§3l§1a§9n§3t§1h§9y§3i§1d§3i§9a§bGames\n".
+                    "§cZabanovan navzdy.\n".
+                    "§bDuvod: §a".$data["reason"], false);
             }
             elseif ($ban < time()){}
             else {
-                $p->kick("§l§4[ §r§6MineTox §l§4]\n".
-                    "§cYou are banned for §a".$data["reason"]."\n".
-                    "§eYour ban expires at ".date('d.m.Y H:i:s', $ban), false);
+                $p->kick("§l§1A§9t§3l§1a§9n§3t§1h§9y§3i§1d§3i§9a§bGames\n".
+                    "§cZabanovan za §a".$data["reason"]."\n".
+                    "§bBan vyprsi za".date('d.m.Y H:i:s', $ban), false);
             }
         }
         $true = [];
