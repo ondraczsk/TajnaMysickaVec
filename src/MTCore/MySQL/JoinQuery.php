@@ -35,43 +35,43 @@ class JoinQuery extends AsyncQuery {
                 if (!(time() >= $data["doba"])) {
                     $time = round(($data["doba"] - time()) / 86400, 1);
 
-                    $result["expired"] = "§l§4[§r§6MineTox§l§4] §aVIP rank expires in §e$time days";
+                    $result["expired"] = "§l§1[§r§1A§3T§9Games§l§1] §aVIP rank vyprsi za §e$time dnu";
                     break;
                 }
-                $result["expired"] = "§l§4[§r§6MineTox§l§4] §aVIP rank expired";
+                $result["expired"] = "§l§1[§r§1A§3T§9Games§l§1] §aVIP rank vyprsel";
                 $this->setPlayer($this->player, "rank", "hrac");
                 break;
             case "vip+":
                 if (!(time() >= $data["doba"])) {
                     $time = round(($data["doba"] - time()) / 86400, 1);
 
-                    $result["expired"] = "§l§4[§r§6MineTox§l§4] §aVIP+ rank expires in §e$time days";
+                    $result["expired"] = "§l§1[§r§1A§3T§9Games§l§1] §aVIP+ rank vyprsi za §e$time dnu";
                     break;
                 }
-                $result["expired"] = "§l§4[§r§6MineTox§l§4] §aVIP+ rank expired";
+                $result["expired"] = "§l§1[§r§1A§3T§9Games§l§1] §aVIP+ rank vyprsel";
                 $this->setPlayer($this->player, "rank", "hrac");
                 break;
         }
 
         $result["msg"] = "§7==========================================" . "\n" .
-            "§e>> Welcome to " . "§l§4[§r§6MineTox§l§4]" . "§e, " . $this->player . "\n" .
-            "§e>> This account is already registered" . "\n" .
-            "§e>> Login with " . "§c/login " . "§eor change" . "\n" .
-            "§e>> your name in the MCPE settings." . "\n" .
+            "§9>> §bVitej na " . "§l§1A§9t§3l§1a§9n§3t§1h§9y§3i§1d§3i§9a§bGames" . "§r§b,§9 " . $this->player . "\n" .
+            "§9>> §bTento ucet je zaregistrovan" . "\n" .
+            "§9>> §bPrihlas se s " . "§f/login " . "§bnebo zmen" . "\n" .
+            "§9>> §bsvuj nick v MCPE nastaveni." . "\n" .
             "§7==========================================";
 
         if ($data["ip"] == $this->ip && $data["id"] == $this->uuid) {
             $result["auth"] = true;
             $result["msg"] = "§7==========================================" . "\n" .
-                "§e>> Welcome to " . "§l§4[§r§6MineTox§l§4]" . "§e, " . $this->player . "\n" .
+                "§9>> §bVitej na " . "§l§1A§9t§3l§1a§9n§3t§1h§9y§3i§1d§3i§9a§bGames" . "§r§b,§9 " . $this->player . "\n" .
                 "§7==========================================";
 
         } elseif (!is_string($data["heslo"]) || strlen($data["heslo"]) < 4) {
             $result["register"] = true;
             $result["msg"] = "§7==========================================" . "\n" .
-                "§e>> Welcome to " . "§l§4[§r§6MineTox§l§4]" . "§e, " . $this->player . "\n" .
-                "§e>> The account has not been registered\n" .
-                "§e>> You can claim it with " . "§c/register <password> <password>\n" .
+                "§9>> §bVitej na " . "§l§1A§9t§3l§1a§9n§3t§1h§9y§3i§1d§3i§9a§bGames" . "§r§b,§9 " . $this->player . "\n" .
+                "§9>> §bTento ucet neni registrovan\n" .
+                "§9>> §9Registruj se s " . "§f/register <heslo> <znovuheslo>\n" .
                 "§7==========================================";
         }
 
@@ -117,7 +117,7 @@ class JoinQuery extends AsyncQuery {
 
         if($p->getInventory() instanceof PlayerInventory and $plugin->isAuthed($p)) {
             $p->getInventory()->clearAll();
-            $p->getInventory()->setItem(0, Item::get(Item::CLOCK, 0, 1)->setCustomName("§r§eHide players"));
+            $p->getInventory()->setItem(0, Item::get(Item::CLOCK, 0, 1)->setCustomName("§r§eVanishovat hrace");
             $p->getInventory()->setItem(1, Item::get(Item::GOLD_INGOT, 0, 1));
             $p->getInventory()->sendContents($p);
         }
