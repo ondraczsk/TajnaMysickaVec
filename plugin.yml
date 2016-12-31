@@ -1,0 +1,119 @@
+name: MTCore
+version: 1.1.0
+api: [2.0.0]
+main: MTCore\MTCore
+author: MineTox Team
+description: "MineTox Core"
+commands:
+  addcoins:
+    description: "Add tokens to player"
+    usage: "/addcoins <player> <amount>"
+  addtokens:
+    description: "Add tokens to player"
+    usage: "/addtokens <player> <amount>"
+  substractcoins:
+    description: "Subsctracts tokens from player"
+    usage: "/substractcoins <player> <amount>"
+  substracttokens:
+    description: "Subsctracts tokens from player"
+    usage: "/substracttokens <player> <amount>"
+  setrank:
+    description: "Set player rank"
+    usage: "/setrank <player> <rank>"
+  help:
+    description: "Help command"
+    usage: "/help"
+  coins:
+    description: "Shows players tokens amount"
+    usage: "/coins"
+  tokens:
+    description: "Shows players tokens amount"
+    usage: "/tokens"
+  register:
+    description: "Registers new player"
+    usage: "/register <password> <password>"
+  login:
+    description: "Logins an existing player"
+    usage: "/login <password>"
+  changepwd:
+    description: "Change players password"
+    usage: "/changepwd <oldpass> <newpass>"
+  changepassword:
+    description: "Change players password"
+    usage: "/changepassword <oldpass> <newpass>"
+  ban:
+    description: "Bans cheater"
+    usage: "/ban <player> <reason>"
+  msg:
+    description: "Private message player"
+    usage: "/msg <player> <message>"
+permissions:
+  minetox:
+    description: "Top MineTox permission level"
+    default: false
+    children:
+      minetox.cmd:
+        description: "MineTox permission level for commands"
+        default: false
+        children:
+          minetox.cmd.addtokens:
+            description: "Can add tokens to players account"
+            default: false
+          minetox.cmd.setrank:
+            description: "Can set players rank"
+            default: false
+          minetox.cmd.substracttokens:
+            description: "Can remove tokens from player account"
+            default: false
+          minetox.cmd.message:
+            description: "Can write private messages"
+            default: false
+      minetox.log:
+        description: "MineTox (pre)login top permission level"
+        default: false
+        children:
+          minetox.log.full:
+            description: "Can login even the server is full"
+            default: false
+      minetox.vip:
+        description: "MineTox perm for VIP ranked players"
+        default: false
+      minetox.vip+:
+        description: "MineTox perm for VIP+ ranked players"
+        default: false
+      minetox.extra:
+        description: "MineTox perm for Extra ranked players"
+        default: false
+      minetox.banner:
+        description: "MineTox perm for Banner ranked players"
+        default: false
+      minetox.owner:
+        description: "MineTox perm for server Owners"
+        default: false
+      minetox.developper:
+        description: "MineTox perm for server Developpers"
+        default: false
+      minetox.youtuber:
+        description: "MineTox perm for YouTubers"
+        default: false
+      minetox.builder:
+        description: "MineTox perm for Builders"
+        default: false
+      minetox.ban:
+        description: "Can ban players"
+        default: false
+      minetox.immune:
+        description: "Can't be banned"
+        default: false
+      minetox.color:
+        description: "Can write colorfully to the chat"
+        default: false
+      minetox.waitbypass:
+        description: "Can chat without delay!"
+        default: false
+      minetox.break:
+        description: "Can break blocks in server lobby"
+        default: false
+      minetox.place:
+        description: "Can place blocks in server lobby"
+        default: false
