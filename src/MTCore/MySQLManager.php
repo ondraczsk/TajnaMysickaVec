@@ -5,7 +5,8 @@ namespace MTCore;
 class MySQLManager{
 
     public static function getMysqlConnection() : \mysqli{
-        $database = new \mysqli("82.208.17.193", "pe_stats", "centrum", "pe_stats");
+        //not working database
+        $database = new \mysqli("82.208.17.193", "pe_stats", "admin", "pe_stats");
 
         return $database;
     }
